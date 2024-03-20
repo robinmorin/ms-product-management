@@ -19,3 +19,11 @@ spring:
   sql:
     init:
       mode: always
+  jackson:
+    date-format: com.fasterxml.jackson.databind.util.StdDateFormat
+
+logging:
+  file:
+    path: ./logs
+    level: INFO
+

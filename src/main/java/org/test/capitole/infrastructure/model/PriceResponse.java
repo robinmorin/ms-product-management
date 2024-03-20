@@ -1,4 +1,4 @@
-package org.test.capitole.infrastructure.adapter.model;
+package org.test.capitole.infrastructure.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

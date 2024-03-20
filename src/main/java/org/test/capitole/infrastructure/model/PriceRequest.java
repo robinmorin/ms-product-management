@@ -1,4 +1,4 @@
-package org.test.capitole.infrastructure.adapter.model;
+package org.test.capitole.infrastructure.model;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;

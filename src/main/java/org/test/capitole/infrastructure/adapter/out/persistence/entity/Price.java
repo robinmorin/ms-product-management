@@ -1,4 +1,4 @@
-package org.test.capitole.infrastructure.persistence.entity;
+package org.test.capitole.infrastructure.adapter.out.persistence.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
@@ -8,6 +8,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,11 +17,12 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "PRICES")
-public class Prices implements Serializable {
+public class Price implements Serializable {
 
     private static final long serialVersionUID = 7480742869731054793L;
 
@@ -37,7 +39,7 @@ public class Prices implements Serializable {
     private Short priority;
 
     @Column(name = "PRICE", nullable = false)
-    private BigDecimal price;
+    private BigDecimal vPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CURRENCY_ISO", referencedColumnName = "CURRENCY_ISO")

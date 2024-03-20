@@ -22,9 +22,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.test.capitole.api.exception.RecordNotFound;
 import org.test.capitole.api.exception.RestExceptionHandler;
+import org.test.capitole.core.mapper.PriceResponseMapper;
+import org.test.capitole.core.model.PriceResponse;
 import org.test.capitole.core.port.in.PriceService;
-import org.test.capitole.infrastructure.adapter.out.persistence.mapper.PriceResponseMapper;
-import org.test.capitole.infrastructure.model.PriceResponse;
 
 import java.time.LocalDateTime;
 

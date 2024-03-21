@@ -1,4 +1,4 @@
-package org.test.capitole.core.entity;
+package org.test.capitole.core.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

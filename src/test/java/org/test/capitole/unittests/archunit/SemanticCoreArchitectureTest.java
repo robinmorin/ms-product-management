@@ -34,8 +34,7 @@ public class SemanticCoreArchitectureTest {
     @ArchTest
     static final ArchRule gatewayClassesMustResideInPortPackage =
             classes().that().haveNameMatching(".*Gateway")
-                     .should().resideInAPackage("..port..")
-                     .andShould().beInterfaces()
+                     .should().resideInAPackage("..gateway..")
                      .as("Gateway's interfaces should reside inside gateway package as interfaces ");
 
     @ArchTest

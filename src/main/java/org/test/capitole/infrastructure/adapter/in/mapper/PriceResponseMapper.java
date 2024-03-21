@@ -1,8 +1,8 @@
-package org.test.capitole.core.mapper;
+package org.test.capitole.infrastructure.adapter.in.mapper;
 
 import org.springframework.stereotype.Component;
-import org.test.capitole.core.entity.PriceDomain;
-import org.test.capitole.core.model.PriceResponse;
+import org.test.capitole.core.domain.PriceDomain;
+import org.test.capitole.infrastructure.adapter.in.model.PriceResponse;
 
 import java.math.RoundingMode;
 

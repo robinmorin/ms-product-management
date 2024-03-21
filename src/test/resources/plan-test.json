@@ -1,0 +1,168 @@
+{
+  "success": [
+    {
+      "testName": "Test 1: petición a las 10:00 del día 14 del producto 35455 para la brand 1 (ZARA)",
+      "request": {
+        "productId": 35455,
+        "brandId": 1,
+        "effectiveDate": "2020-06-14 10:00:00"
+      },
+      "response": {
+        "productId": 35455,
+        "brandId": 1,
+        "priceListId": 1,
+        "effectiveDateRange": {
+          "from": "2020-06-14T00:00:00",
+          "to": "2020-12-31T23:59:59"
+        },
+        "priceToApply": "35.50"
+      }
+    },
+    {
+      "testName": "Test 2: petición a las 16:00 del día 14 del producto 35455   para la brand 1 (ZARA)",
+      "request": {
+        "productId": 35455,
+        "brandId": 1,
+        "effectiveDate": "2020-06-14 16:00:00"
+      },
+      "response": {
+        "productId": 35455,
+        "brandId": 1,
+        "priceListId": 2,
+        "effectiveDateRange": {
+          "from": "2020-06-14T15:00:00",
+          "to": "2020-06-14T18:30:00"
+        },
+        "priceToApply": "25.45"
+      }
+    },
+    {
+      "testName": "Test 3: petición a las 21:00 del día 14 del producto 35455   para la brand 1 (ZARA)",
+      "request": {
+        "productId": 35455,
+        "brandId": 1,
+        "effectiveDate": "2020-06-14 21:00:00"
+      },
+      "response": {
+        "productId": 35455,
+        "brandId": 1,
+        "priceListId": 1,
+        "effectiveDateRange": {
+          "from": "2020-06-14T00:00:00",
+          "to": "2020-12-31T23:59:59"
+        },
+        "priceToApply": "35.50"
+      }
+    },
+    {
+      "testName": "Test 4: petición a las 10:00 del día 15 del producto 35455   para la brand 1 (ZARA)",
+      "request": {
+        "productId": 35455,
+        "brandId": 1,
+        "effectiveDate": "2020-06-15 10:00:00"
+      },
+      "response": {
+        "productId": 35455,
+        "brandId": 1,
+        "priceListId": 3,
+        "effectiveDateRange": {
+          "from": "2020-06-15T00:00:00",
+          "to": "2020-06-15T11:00:00"
+        },
+        "priceToApply": "30.50"
+      }
+    },
+    {
+      "testName": "Test 5: petición a las 21:00 del día 16 del producto 35455   para la brand 1 (ZARA)",
+      "request": {
+        "productId": 35455,
+        "brandId": 1,
+        "effectiveDate": "2020-06-16 21:00:00"
+      },
+      "response": {
+        "productId": 35455,
+        "brandId": 1,
+        "priceListId": 4,
+        "effectiveDateRange": {
+          "from": "2020-06-15T16:00:00",
+          "to": "2020-12-31T23:59:59"
+        },
+        "priceToApply": "38.95"
+      }
+    }
+  ],
+  "fails": [
+    {
+      "testName": "Test 1: Codigo de producto invalido",
+      "request": {
+        "productId": 0,
+        "brandId": 1,
+        "effectiveDate": "2020-06-14 10:00:00"
+      },
+      "response": {
+        "httpStatus": 400,
+        "errors": ["ProductId must be greater than 0"]
+      }
+    },
+    {
+      "testName": "Test 2: Codigo de brand invalido",
+      "request": {
+        "productId": 35455,
+        "brandId": 0,
+        "effectiveDate": "2020-06-14 10:00:00"
+      },
+      "response": {
+        "httpStatus": 400,
+        "errors": ["BrandId must be greater than 0"]
+      }
+    },
+    {
+      "testName": "Test 3: Fecha invalida",
+      "request": {
+        "productId": 35455,
+        "brandId": 1,
+        "effectiveDate": "2020-06-14 10:00"
+      },
+      "response": {
+        "httpStatus": 400,
+        "errors": ["FieldName: effectiveDate", "Message: Field format value is not valid"]
+      }
+    },
+    {
+      "testName": "Test 4: Precio no existe (con ProductId inexistente)",
+      "request": {
+        "productId": 35441,
+        "brandId": 1,
+        "effectiveDate": "2020-06-14 10:00:00"
+      },
+      "response": {
+        "httpStatus": 400,
+        "errors": ["Message: Price not found with the given parameters", "Cause: RecordNotFound"]
+      }
+    },
+    {
+      "testName": "Test 5: Precio no existe (con BrandId inexistente)",
+      "request": {
+        "productId": 35455,
+        "brandId": 2,
+        "effectiveDate": "2020-06-14 10:00:00"
+      },
+      "response": {
+        "httpStatus": 400,
+        "errors": ["Message: Price not found with the given parameters", "Cause: RecordNotFound"]
+      }
+    },
+    {
+      "testName": "Test 6: Precio no existe (con Fecha fuera de los rangos)",
+      "request": {
+        "productId": 35455,
+        "brandId": 1,
+        "effectiveDate": "2020-06-10 10:00:00"
+      },
+      "response": {
+        "httpStatus": 400,
+        "errors": ["Message: Price not found with the given parameters", "Cause: RecordNotFound"]
+      }
+    }
+  ]
+}

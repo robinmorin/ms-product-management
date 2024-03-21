@@ -18,6 +18,7 @@ public class LayerArchitectureTest {
     private static Map.Entry<String,String> INFRASTRUTURE_LAYER_PACKAGE =  new AbstractMap.SimpleImmutableEntry<>("Infrastruture Layer","org.test.capitole.infrastructure..");
     private static Map.Entry<String,String> CORE_LAYER_PACKAGES =  new AbstractMap.SimpleImmutableEntry<>("Core Layer (Domain)","org.test.capitole.core..");
     private static Map.Entry<String,String> DATA_ADAPTER_LAYER_PACKAGES =  new AbstractMap.SimpleImmutableEntry<>("Data Adapter Layer (Adapter Out)","org.test.capitole.infrastructure.adapter.out.persistence..");
+    private static Map.Entry<String,String> TEST_LAYER_PACKAGES =  new AbstractMap.SimpleImmutableEntry<>("Test Layer","org.test.capitole.executions..");
 
 
     @ArchTest
@@ -27,9 +28,11 @@ public class LayerArchitectureTest {
         .layer(INFRASTRUTURE_LAYER_PACKAGE.getKey()).definedBy(INFRASTRUTURE_LAYER_PACKAGE.getValue())
         .layer(CORE_LAYER_PACKAGES.getKey()).definedBy(CORE_LAYER_PACKAGES.getValue())
         .layer(DATA_ADAPTER_LAYER_PACKAGES.getKey()).definedBy(DATA_ADAPTER_LAYER_PACKAGES.getValue())
+        .layer(TEST_LAYER_PACKAGES.getKey()).definedBy(TEST_LAYER_PACKAGES.getValue())
         .whereLayer(CORE_LAYER_PACKAGES.getKey()).mayNotAccessAnyLayer()
         .whereLayer(DATA_ADAPTER_LAYER_PACKAGES.getKey()).mayNotBeAccessedByAnyLayer()
-        .whereLayer(INFRASTRUTURE_LAYER_PACKAGE.getKey()).mayNotBeAccessedByAnyLayer()
-        .whereLayer(API_LAYER_PACKAGES.getKey()).mayOnlyBeAccessedByLayers(INFRASTRUTURE_LAYER_PACKAGE.getKey())
-        .whereLayer(CORE_LAYER_PACKAGES.getKey()).mayOnlyBeAccessedByLayers(API_LAYER_PACKAGES.getKey(), DATA_ADAPTER_LAYER_PACKAGES.getKey(), INFRASTRUTURE_LAYER_PACKAGE.getKey());
+        .whereLayer(INFRASTRUTURE_LAYER_PACKAGE.getKey()).mayOnlyBeAccessedByLayers(TEST_LAYER_PACKAGES.getKey())
+        .whereLayer(API_LAYER_PACKAGES.getKey()).mayOnlyBeAccessedByLayers(INFRASTRUTURE_LAYER_PACKAGE.getKey(), TEST_LAYER_PACKAGES.getKey())
+        .whereLayer(CORE_LAYER_PACKAGES.getKey()).mayOnlyBeAccessedByLayers(API_LAYER_PACKAGES.getKey(), DATA_ADAPTER_LAYER_PACKAGES.getKey(), INFRASTRUTURE_LAYER_PACKAGE.getKey(), TEST_LAYER_PACKAGES.getKey())
+        .whereLayer(TEST_LAYER_PACKAGES.getKey()).mayNotBeAccessedByAnyLayer();
 }

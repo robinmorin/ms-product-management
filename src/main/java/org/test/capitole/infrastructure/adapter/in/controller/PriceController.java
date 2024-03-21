@@ -10,24 +10,22 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.test.capitole.api.exception.RecordNotFound;
 import org.test.capitole.api.exception.RestExceptionHandler;
-import org.test.capitole.core.mapper.PriceResponseMapper;
-import org.test.capitole.core.model.PriceResponse;
-import org.test.capitole.core.port.in.PriceService;
+import org.test.capitole.api.usecase.SearchPriceByMostPriorityInteractor;
+import org.test.capitole.infrastructure.adapter.in.mapper.PriceResponseMapper;
+import org.test.capitole.infrastructure.adapter.in.model.PriceResponse;
 
 import java.time.LocalDateTime;
 
+@Slf4j
 @Tag(name = "Prices", description = "Controller for Prices Product Operations")
 @RestController
 @Validated
@@ -35,7 +33,7 @@ import java.time.LocalDateTime;
 @RequestMapping("/api/v1/products")
 public class PriceController {
 
-    private final PriceService priceService;
+    private final SearchPriceByMostPriorityInteractor interactor;
     private final PriceResponseMapper priceResponseMapper;
 
     @Operation(summary = "Request price product by brand that could be apply in specific date")
@@ -62,10 +60,11 @@ public class PriceController {
                                                   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss", iso = DateTimeFormat.ISO.DATE_TIME)
                                                   LocalDateTime effectiveDate){
 
-        var response = priceService.searchByMostPriority(productId, brandId, effectiveDate)
+        log.info("Requesting price for Product: {} Brand: {} EffectiveDate: {}", productId, brandId, effectiveDate);
+        var response = interactor.searchByMostPriority(productId, brandId, effectiveDate)
                                    .map(priceResponseMapper::toResponse)
                                 .orElseThrow(()-> new RecordNotFound(HttpStatus.UNPROCESSABLE_ENTITY, "Price not found with the given parameters"));
-
+        log.info("Price found in Price List: {}, Value: {}, EffectiveDateRange: {}", response.getPriceListId(), response.getPriceToApply(), response.getEffectiveDateRange());
         return ResponseEntity.ok(response);
     }
 

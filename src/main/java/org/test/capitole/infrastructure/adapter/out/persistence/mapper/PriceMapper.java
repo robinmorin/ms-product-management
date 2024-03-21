@@ -1,12 +1,8 @@
 package org.test.capitole.infrastructure.adapter.out.persistence.mapper;
 
 import org.springframework.stereotype.Component;
-import org.test.capitole.core.entity.PriceDomain;
-import org.test.capitole.infrastructure.adapter.out.persistence.entity.Brand;
-import org.test.capitole.infrastructure.adapter.out.persistence.entity.Currency;
-import org.test.capitole.infrastructure.adapter.out.persistence.entity.Price;
-import org.test.capitole.infrastructure.adapter.out.persistence.entity.PricePK;
-import org.test.capitole.infrastructure.adapter.out.persistence.entity.Product;
+import org.test.capitole.core.domain.PriceDomain;
+import org.test.capitole.infrastructure.adapter.out.persistence.entity.*;
 
 @Component
 public class PriceMapper {
@@ -21,6 +17,7 @@ public class PriceMapper {
                         .currency(currency)
                         .startDate(priceDomain.getEffectiveDates().getStartDate())
                         .endDate(priceDomain.getEffectiveDates().getEndDate())
+                        .vPrice(priceDomain.getPrice())
                     .build();
     }
 

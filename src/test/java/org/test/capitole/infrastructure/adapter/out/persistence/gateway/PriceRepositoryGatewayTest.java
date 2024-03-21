@@ -17,7 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -42,19 +44,26 @@ class PriceRepositoryGatewayTest {
 
         // Arrange
         PricePK pricePK = new PricePK(Brand.builder().brandId(1).build(),
-                                      Product.builder().productId(1L).build(),1);
+                                      Product.builder().productId(1L).build(), 1);
         Price price = Price.builder()
-                                .pricePK(pricePK)
-                                .priority((short) 1)
-                                .startDate(LocalDateTime.now().minusDays(4))
-                                .endDate(LocalDateTime.now().plusDays(3))
-                                .vPrice(new BigDecimal("22.30"))
-                                .currency(Currency.builder().currencyIso("EUR").build())
-                            .build();
+                .pricePK(pricePK)
+                .priority((short) 1)
+                .startDate(LocalDateTime.now().minusDays(4))
+                .endDate(LocalDateTime.now().plusDays(3))
+                .vPrice(new BigDecimal("22.30"))
+                .currency(Currency.builder().currencyIso("EUR").build())
+                .build();
 
         Optional<List<Price>> result = Optional.of(List.of(price));
         when(priceRepository.findByParamsOrderPriorityDesc(anyLong(), anyInt(), any(LocalDateTime.class))).thenReturn(result);
-        PriceDomain resultMapped = priceMapper.toDomain(result.get().get(0));
+        PriceDomain resultMapped = PriceDomain.builder()
+                .productId(1L)
+                .brandId(1)
+                .priority((short) 1)
+                .effectiveDates(new PriceDomain.RangeDate(LocalDateTime.now().minusDays(4), LocalDateTime.now().plusDays(3)))
+                .price(new BigDecimal("22.30"))
+                .currencyIso("EUR")
+                .build();
         when(priceMapper.toDomain(any(Price.class))).thenReturn(resultMapped);
 
         // Act
@@ -63,9 +72,8 @@ class PriceRepositoryGatewayTest {
 
         // Assert
         verify(priceRepository).findByParamsOrderPriorityDesc(anyLong(), anyInt(), any(LocalDateTime.class));
-        assertFalse(actualResult.isPresent());
-//        assertEquals(resultMapped, actualResult.get());
-        //TODO: Arrumar teste
+        assertTrue(actualResult.isPresent());
+        assertEquals(resultMapped, actualResult.get());
     }
 
     @Test

@@ -64,7 +64,7 @@ public class PriceController {
         var response = interactor.searchByMostPriority(productId, brandId, effectiveDate)
                                    .map(priceResponseMapper::toResponse)
                                 .orElseThrow(()-> new RecordNotFound(HttpStatus.UNPROCESSABLE_ENTITY, "Price not found with the given parameters"));
-        log.info("Price found in Price List: {}, Value: {}, EffectiveDateRange: {}", response.getPriceListId(), response.getPriceToApply(), response.getEffectiveDateRange());
+        log.info("Returning price found - Price List: {}, Value: {}, EffectiveDateRange: {}", response.getPriceListId(), response.getPriceToApply(), response.getEffectiveDateRange());
         return ResponseEntity.ok(response);
     }
 

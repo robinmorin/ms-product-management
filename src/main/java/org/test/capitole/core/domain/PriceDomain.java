@@ -3,6 +3,10 @@ package org.test.capitole.core.domain;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+
+/***
+ * PriceDomain class: Represent the price domain object without any dependency of neither framework nor infrastructure.
+ */
 public class PriceDomain {
 
     private Integer brandId;

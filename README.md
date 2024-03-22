@@ -26,20 +26,24 @@
     - Para manejar de manera más flexible y efectiva los objetos `LocalDateTime`, incorporé la dependencia `com.fasterxml.jackson.datatype:jackson-datatype-jsr310`, que se adhiere al estándar ISO8601 para la representación de fechas y horas.
 -----
 4. **Tests**:
-    - Implementé los **tests unitarios** siguiendo la semántica AAA (Arrange/Act/Assert) que es equivalente a (Preparar/Ejecutar/Validar), lo que estandariza la organización de los tests facilitando su comprensión y mantenimiento.
-    - Para los **tests de integración**, desarrollé una clase llamada `TestPlanUtils`
-      La clase TestPlanUtils se encarga de leer un archivo JSON y cargar dos colas: una para los casos de prueba exitosos (successQueue) y otra para los fallidos (failsQueue).
-      TestPlanUtils dispone de una Inner class StructPlan, este modelo posse toda la información necesaria para cada caso de prueba, los campos de esa estructura son:
-      <testName>: Nombre del caso de prueba, para usar a discresión en la ejecución del test.
-      <request>: Nodo con los datos para armar el request del test.
-      <response>: Nodo con el JSON esperado para hacer el Assert con la respuesta de la petición.
-      El archivo JSON informado puede contener dos nodos principales: success y fails, sin embargo, puede contener solo uno de ellos segun sea la necesidad. Cada nodo contiene un array de objetos StructPlan.
-      TestPlanUtils dispone de una Inner class Handler para facilitar la interacción con las colas, el Handler ofrece dos métodos:
-      nextTest(): Retorna la información de cada caso de uso como una estructura StructPlan.
-      hasMoreTest(): Indica si hay más casos de prueba disponibles en la cola actual.
-      Desarrolle esta clase con el proposito de que se ejecute el mismo código para todos los casos de prueba de integracion, manteniendo el código limpio, poco verboso y reutilizable.
+   - Implementé los **tests unitarios** siguiendo la semántica AAA (Arrange/Act/Assert) que es equivalente a (Preparar/Ejecutar/Validar), lo que estandariza la organización de los tests facilitando su comprensión y mantenimiento.
+   - Para los **tests de integración**, desarrollé una clase llamada `TestPlanUtils`
+     La clase TestPlanUtils se encarga de leer un archivo JSON y cargar dos colas: una para los casos de prueba exitosos (successQueue) y otra para los fallidos (failsQueue).
+     TestPlanUtils dispone de una Inner class StructPlan, este modelo posse toda la información necesaria para cada caso de prueba, 
+     los campos de esa estructura son:
+   
+     -  `<testName>: Nombre del caso de prueba, para usar a discresión en la ejecución del test.`
+     -  `<request>: Nodo con los datos para armar el request del test.`
+     -  `<response>: Nodo con el JSON esperado para hacer el Assert con la respuesta de la petición.`
+   
+       El archivo JSON informado puede contener dos nodos principales: success y fails, sin embargo, puede contener solo uno de ellos segun sea la necesidad. Cada nodo contiene un array de objetos StructPlan.
+       TestPlanUtils dispone de una Inner class Handler para facilitar la interacción con las colas, el Handler ofrece dos métodos:
+       - `nextTest(): Retorna la información de cada caso de uso como una estructura StructPlan.`
+       - `hasMoreTest(): Indica si hay más casos de prueba disponibles en la cola actual.`
+     
+       Desarrolle esta clase con el proposito de que se ejecute el mismo código para todos los casos de prueba de integracion, manteniendo el código limpio, poco verboso y reutilizable.
 
-      A continuación detallaré como fue utilizada esta clase utilitaria en la clase de TestExecutions:
+   - A continuación detallaré como fue utilizada esta clase utilitaria en la clase de TestExecutions:
     >- Se crea una instancia de la clase TestPlanUtils con la ruta del archivo JSON.
     >- Se obtiene un manejador (Handler) de la clase TestPlanUtils.
     >- Se ejecuta un bucle mientras haya más casos de prueba disponibles (hasMoreTest).

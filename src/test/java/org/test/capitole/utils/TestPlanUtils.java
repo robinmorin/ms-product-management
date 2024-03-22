@@ -17,7 +17,6 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 @Slf4j
-//@Disabled
 public final class TestPlanUtils {
 
     ObjectMapper mapper = new ObjectMapper();

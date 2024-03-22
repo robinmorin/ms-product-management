@@ -1,12 +1,18 @@
 package org.test.capitole.infrastructure.adapter.out.persistence.mapper;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.test.capitole.core.domain.PriceDomain;
 import org.test.capitole.infrastructure.adapter.out.persistence.entity.*;
 
+/**
+ * PriceMapper class : Mapper to convert domain object PriceDomain to entity object Price
+ */
+@Slf4j
 @Component
 public class PriceMapper {
     public Price toEntity(PriceDomain priceDomain) {
+        log.info("Converting Domain Price to Entity Price");
         var product = Product.builder().productId(priceDomain.getProductId()).build();
         var brand = Brand.builder().brandId(priceDomain.getBrandId()).build();
         var currency = Currency.builder().currencyIso(priceDomain.getCurrencyIso()).build();
@@ -22,6 +28,7 @@ public class PriceMapper {
     }
 
     public PriceDomain toDomain(Price price) {
+        log.info("Converting Entity Price to Domain Price");
         var rangeDate = new PriceDomain.RangeDate(price.getStartDate(), price.getEndDate());
         return PriceDomain.builder()
                             .productId(price.getPricePK().getProduct().getProductId())

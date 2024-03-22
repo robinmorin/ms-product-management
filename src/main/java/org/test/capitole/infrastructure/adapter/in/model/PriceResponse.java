@@ -8,6 +8,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * PriceResponse class: Represent the presentation object to return price for the API.
+ */
 @Getter
 @Setter
 @Builder
